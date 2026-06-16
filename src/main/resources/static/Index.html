@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helok Clothing - Premium Custom Jerseys</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            scroll-behavior: smooth; 
+        }
+        
+        .hero-gradient { 
+            background: linear-gradient(135deg, #60327C 0%, #8b4fa8 100%); 
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Smoothing the dropdown transition */
+        .dropdown-bridge {
+            padding-top: 10px;
+            margin-top: -5px;
+        }
+    </style>
+</head>
+<body class="bg-[#D1F2F2]">
+
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="image/Logo.jpeg" alt="Helok Logo" class="h-10" onerror="this.src='https://via.placeholder.com/100x40?text=HELOK'">
+            </div>
+            
+            <div class="flex items-center space-x-6">
+                <div class="relative group">
+                    <button class="bg-[#60327C] text-white px-6 py-2 rounded-lg font-medium flex items-center hover:bg-[#4d2863] transition-all">
+                        Login <i data-feather="chevron-down" class="ml-2 w-4 h-4"></i>
+                    </button>
+                    
+                    <div class="absolute right-0 top-full hidden group-hover:block z-50 dropdown-bridge w-48">
+                        <div class="bg-white border border-gray-100 rounded-xl shadow-xl overflow-hidden">
+                            <a href="CustLogin.html" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 border-b">Customer Login</a>
+                            <a href="StaffDashboard/StaffLoginAccess.html" class="block px-4 py-3 text-gray-700 hover:bg-gray-50">Staff Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-gradient text-white py-20 px-6">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="bg-white/20 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-6 inline-block">🔥 NEW COLLECTION 2026</span>
+                <h1 class="text-6xl font-extrabold mb-6 leading-tight">Premium Custom <br> Team Jerseys</h1>
+                <p class="text-lg text-white/80 mb-8 max-w-lg">Design your perfect team wear with 2 premium materials, unlimited colors, and professional customization options.</p>
+                <a href="#products" class="bg-white text-[#60327C] px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:-translate-y-1 transition-all inline-block">Shop Now</a>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <img src="image/jersey2.jpg" class="rounded-2xl shadow-2xl rotate-2" alt="J1">
+                <img src="image/jersey1.jpg" class="rounded-2xl shadow-2xl mt-10 -rotate-2" alt="J2">
+                <img src="image/jersey3.jpg" class="rounded-2xl shadow-2xl -mt-4 rotate-3" alt="J3">
+                <img src="image/jersey6.jpg" class="rounded-2xl shadow-2xl mt-4 -rotate-3" alt="J4">
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="max-w-7xl mx-auto px-6 py-16">
+        <div class="mb-10">
+            <h2 class="text-4xl font-extrabold text-gray-900 mb-2">All Products</h2>
+            <p class="text-gray-600 italic">Browse our complete collection of custom team jerseys.</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            <div class="bg-white rounded-2xl card-shadow group flex flex-col p-4 border border-transparent hover:border-[#60327C] transition-all">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-xl mb-4"><span class="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded z-10">NEW</span><img src="image/jersey2.jpg" class="w-full h-full object-cover"></div>
+                <h3 class="text-[11px] text-gray-400 font-medium truncate">IKM UDE Jersey</h3>
+                <p class="text-lg font-bold text-[#60327C] mb-4">RM55.99</p>
+                <a href="CustLogin.html" class="block w-full py-2 bg-[#60327C] text-white rounded-lg text-xs font-bold text-center">View Details</a>
+            </div>
+
+            <div class="bg-white rounded-2xl card-shadow group flex flex-col p-4 border border-transparent hover:border-[#60327C] transition-all">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-xl mb-4"><img src="image/jersey1.jpg" class="w-full h-full object-cover"></div>
+                <h3 class="text-[11px] text-gray-400 font-medium truncate">Politeknik Sultan</h3>
+                <p class="text-lg font-bold text-[#60327C] mb-4">RM49.99</p>
+                <a href="CustLogin.html" class="block w-full py-2 bg-[#60327C] text-white rounded-lg text-xs font-bold text-center">View Details</a>
+            </div>
+
+            <div class="bg-white rounded-2xl card-shadow group flex flex-col p-4 border border-transparent hover:border-[#60327C] transition-all">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-xl mb-4"><img src="image/jersey3.jpg" class="w-full h-full object-cover"></div>
+                <h3 class="text-[11px] text-gray-400 font-medium truncate">Creative Team</h3>
+                <p class="text-lg font-bold text-[#60327C] mb-4">RM52.99</p>
+                <a href="CustLogin.html" class="block w-full py-2 bg-[#60327C] text-white rounded-lg text-xs font-bold text-center">View Details</a>
+            </div>
+
+            <div class="bg-white rounded-2xl card-shadow group flex flex-col p-4 border border-transparent hover:border-[#60327C] transition-all">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-xl mb-4"><img src="image/jersey10.jpg" class="w-full h-full object-cover"></div>
+                <h3 class="text-[11px] text-gray-400 font-medium truncate">KKA Jersey</h3>
+                <p class="text-lg font-bold text-[#60327C] mb-4">RM58.99</p>
+                <a href="CustLogin.html" class="block w-full py-2 bg-[#60327C] text-white rounded-lg text-xs font-bold text-center">View Details</a>
+            </div>
+
+            <div class="bg-white rounded-2xl card-shadow group flex flex-col p-4 border border-transparent hover:border-[#60327C] transition-all">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-xl mb-4"><img src="image/jersey12.jpg" class="w-full h-full object-cover"></div>
+                <h3 class="text-[11px] text-gray-400 font-medium truncate">KKA Red</h3>
+                <p class="text-lg font-bold text-[#60327C] mb-4">RM57.99</p>
+                <a href="CustLogin.html" class="block w-full py-2 bg-[#60327C] text-white rounded-lg text-xs font-bold text-center">View Details</a>
+            </div>
+
+            <div class="bg-white rounded-2xl card-shadow group flex flex-col p-4 border border-transparent hover:border-[#60327C] transition-all">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-xl mb-4"><img src="image/jersey6.jpg" class="w-full h-full object-cover"></div>
+                <h3 class="text-[11px] text-gray-400 font-medium truncate">Johor Team</h3>
+                <p class="text-lg font-bold text-[#60327C] mb-4">RM59.99</p>
+                <a href="CustLogin.html" class="block w-full py-2 bg-[#60327C] text-white rounded-lg text-xs font-bold text-center">View Details</a>
+            </div>
+
+            <div class="bg-white rounded-2xl card-shadow group flex flex-col p-4 border border-transparent hover:border-[#60327C] transition-all">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-xl mb-4"><img src="image/jersey9.jpg" class="w-full h-full object-cover"></div>
+                <h3 class="text-[11px] text-gray-400 font-medium truncate">KKA White</h3>
+                <p class="text-lg font-bold text-[#60327C] mb-4">RM56.99</p>
+                <a href="CustLogin.html" class="block w-full py-2 bg-[#60327C] text-white rounded-lg text-xs font-bold text-center">View Details</a>
+            </div>
+
+            <div class="bg-white rounded-2xl card-shadow group flex flex-col p-4 border border-transparent hover:border-[#60327C] transition-all">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-xl mb-4"><img src="image/jersey11.jpg" class="w-full h-full object-cover"></div>
+                <h3 class="text-[11px] text-gray-400 font-medium truncate">GLB Running Day</h3>
+                <p class="text-lg font-bold text-[#60327C] mb-4">RM54.99</p>
+                <a href="CustLogin.html" class="block w-full py-2 bg-[#60327C] text-white rounded-lg text-xs font-bold text-center">View Details</a>
+            </div>
+
+            <div class="bg-white rounded-2xl card-shadow group flex flex-col p-4 border border-transparent hover:border-[#60327C] transition-all">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-xl mb-4"><img src="image/jersey7.jpg" class="w-full h-full object-cover"></div>
+                <h3 class="text-[11px] text-gray-400 font-medium truncate">KKA Black</h3>
+                <p class="text-lg font-bold text-[#60327C] mb-4">RM53.99</p>
+                <a href="CustLogin.html" class="block w-full py-2 bg-[#60327C] text-white rounded-lg text-xs font-bold text-center">View Details</a>
+            </div>
+
+            <div class="bg-white rounded-2xl card-shadow group flex flex-col p-4 border border-transparent hover:border-[#60327C] transition-all">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-xl mb-4"><img src="image/jersey5.jpg" class="w-full h-full object-cover"></div>
+                <h3 class="text-[11px] text-gray-400 font-medium truncate">PDRM Johor</h3>
+                <p class="text-lg font-bold text-[#60327C] mb-4">RM61.99</p>
+                <a href="CustLogin.html" class="block w-full py-2 bg-[#60327C] text-white rounded-lg text-xs font-bold text-center">View Details</a>
+            </div>
+
+            <div class="bg-white rounded-2xl card-shadow group flex flex-col p-4 border border-transparent hover:border-[#60327C] transition-all">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-xl mb-4"><img src="image/jersey8.jpg" class="w-full h-full object-cover"></div>
+                <h3 class="text-[11px] text-gray-400 font-medium truncate">KKA Blue</h3>
+                <p class="text-lg font-bold text-[#60327C] mb-4">RM55.99</p>
+                <a href="CustLogin.html" class="block w-full py-2 bg-[#60327C] text-white rounded-lg text-xs font-bold text-center">View Details</a>
+            </div>
+
+            <div class="bg-white rounded-2xl card-shadow group flex flex-col p-4 border border-transparent hover:border-[#60327C] transition-all">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-xl mb-4"><img src="image/jersey4.jpg" class="w-full h-full object-cover"></div>
+                <h3 class="text-[11px] text-gray-400 font-medium truncate">GLB Event</h3>
+                <p class="text-lg font-bold text-[#60327C] mb-4">RM58.99</p>
+                <a href="CustLogin.html" class="block w-full py-2 bg-[#60327C] text-white rounded-lg text-xs font-bold text-center">View Details</a>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+    <button onclick="window.location.href='CustLogin.html'" class="bg-white border border-gray-200 text-gray-800 px-8 py-3 rounded-xl font-bold shadow-sm hover:bg-gray-50 flex items-center mx-auto">
+        View All Products <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+    </button>
+</div>
+    </section>
+
+   
+               
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white py-12 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start mb-10">
+                <div class="mb-8 md:mb-0">
+                    <img src="image/Logo.jpeg" alt="Helok Logo" class="h-8 mb-4">
+                    <p class="text-gray-400 text-sm max-w-xs">High-quality custom team jerseys designed for performance and style.</p>
+                </div>
+                
+                <div class="flex space-x-16">
+                    <div>
+                        <h5 class="font-bold text-gray-900 mb-4 text-sm">Shop</h5>
+                        <ul class="text-gray-500 text-sm space-y-2">
+                            <li><a href="#" class="hover:text-[#60327C]">All Items</a></li>
+                            <li><a href="#" class="hover:text-[#60327C]">New Collection</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-gray-900 mb-4 text-sm">Company</h5>
+                        <ul class="text-gray-500 text-sm space-y-2">
+                            <li><a href="#" class="hover:text-[#60327C]">Contact Us</a></li>
+                            <li><a href="#" class="hover:text-[#60327C]">Staff Portal</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-400 text-xs">
+                <p>&copy; 2026 Helok Clothing. All rights reserved.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <i data-feather="instagram" class="w-4 h-4 cursor-pointer hover:text-[#60327C]"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>

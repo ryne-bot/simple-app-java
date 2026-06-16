@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generate Report - HELOK Staff</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+body { background:#d8f6f2; }
+.wrap { display:flex; min-height:100vh; }
+
+.sidebar { width:240px; background:#2b160f; color:white; padding-top:20px; position:fixed; height:100%; display:flex; flex-direction:column; }
+.logo { text-align:center; margin-bottom:40px; }
+.logo-box { width:85px; height:85px; background:white; margin:auto; display:flex; flex-direction:column; justify-content:center; align-items:center; border-radius:4px; color:#2b160f; font-weight:bold; }
+.logo-box h1 { font-size:42px; line-height:40px; }
+.logo-box p { font-size:11px; letter-spacing:2px; }
+.menu { padding:0 15px; flex:1; }
+.menu a { display:flex; align-items:center; gap:12px; text-decoration:none; color:white; padding:15px; border-radius:12px; margin-bottom:8px; transition:0.2s; font-size:15px; }
+.menu a:hover { background:#4d2d22; }
+.menu a.active { background:#4d2d22; color:#ff8a3d; }
+.menu a i { width:20px; }
+.logout { padding:0 15px 20px; margin-top:auto; }
+.logout a { display:flex; align-items:center; gap:12px; text-decoration:none; color:rgba(255,180,180,0.85); padding:15px; border-radius:12px; transition:0.2s; font-size:15px; }
+.logout a:hover { background:#3a0a0a; }
+
+.main { margin-left:240px; width:calc(100% - 240px); padding:30px; }
+h1 { font-size:38px; color:#222; margin-bottom:6px; }
+.sub { color:#666; margin-bottom:22px; font-size:15px; }
+
+.card { background:white; border-radius:18px; padding:26px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:20px; }
+.card h2 { font-size:18px; font-weight:700; color:#222; margin-bottom:18px; }
+
+/* FILTER ROW */
+.filter-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.filter-row label { font-size:14px; font-weight:700; color:#444; white-space:nowrap; }
+.filter-row input[type="date"] { padding:9px 13px; border:1.5px solid #ddd; border-radius:10px; font-size:14px; outline:none; }
+.filter-row input[type="date"]:focus { border-color:#2b160f; }
+.btn-gen { background:#2b160f; color:white; border:none; padding:10px 20px; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+.btn-gen:hover { background:#4d2d22; }
+.btn-exp { background:white; border:1.5px solid #ddd; color:#222; padding:10px 18px; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+.btn-exp:hover { border-color:#2b160f; background:#f5f5f5; }
+
+/* SUMMARY CARDS */
+.sum-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
+.sum-card { background:#d8f6f2; border-radius:12px; padding:18px; text-align:center; }
+.sum-card .val { font-size:24px; font-weight:700; color:#2b160f; margin-bottom:4px; }
+.sum-card .lbl { font-size:13px; color:#555; font-weight:600; }
+
+/* BAR CHART */
+.bar-chart { display:flex; align-items:flex-end; gap:8px; height:100px; margin-bottom:6px; }
+.b-item { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; height:100%; justify-content:flex-end; }
+.b-fill { width:100%; border-radius:4px 4px 0 0; background:#2b160f; min-height:4px; }
+.b-fill.hi { background:#4b184f; }
+.b-lbl { font-size:11px; color:#888; white-space:nowrap; }
+
+/* TABLE */
+table { width:100%; border-collapse:collapse; }
+thead tr { background:#f5f5f5; }
+th { padding:12px 13px; text-align:left; font-size:12px; color:#888; text-transform:uppercase; letter-spacing:0.4px; font-weight:700; border-bottom:1px solid #eee; }
+td { padding:13px 13px; font-size:14px; color:#444; border-bottom:1px solid #f5f5f5; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover td { background:#f9fdfd; }
+
+.badge { display:inline-block; padding:4px 11px; border-radius:20px; font-size:12px; font-weight:700; }
+.b-pending    { background:#FEF9C3; color:#92400E; }
+.b-processing { background:#DBEAFE; color:#1E40AF; }
+.b-shipped    { background:#EDE9FE; color:#5B21B6; }
+.b-delivered  { background:#DCFCE7; color:#15803D; }
+.b-paid       { background:#DCFCE7; color:#15803D; }
+
+.footer { display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-size:13.5px; color:#666; }
+.pager { display:flex; gap:6px; }
+.pg { width:32px; height:32px; border:1.5px solid #ddd; border-radius:8px; background:white; font-size:13px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.pg:hover, .pg.on { background:#2b160f; color:white; border-color:#2b160f; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="sidebar">
+    <div class="logo"><div class="logo-box"><h1>H</h1><p>HELOK</p></div></div>
+    <div class="menu">
+        <a href="staffDashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+        <a href="viewProductStaff.html"><i class="fa-solid fa-cube"></i> Product Management</a>
+        <a href="viewOrderStaff.html"><i class="fa-regular fa-clock"></i> Order Management</a>
+        <a href="viewCustomerStaff.html"><i class="fa-regular fa-user"></i> Customer Management</a>
+        <a href="generateReport.html" class="active"><i class="fa-solid fa-chart-column"></i> Generate Report</a>
+        <a href="profileStaff.html"><i class="fa-solid fa-gear"></i> My Profile</a>
+    </div>
+    <div class="logout"><a href="StaffLogin.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></div>
+</div>
+
+<div class="main">
+    <h1>Generate Report</h1>
+    <p class="sub">Select a report type and date range to generate and export reports.</p>
+
+    <!-- DATE FILTER -->
+    <div class="card">
+        <h2>Date Range</h2>
+        <div class="filter-row">
+            <label>From</label>
+            <input type="date" value="2025-05-01">
+            <label>To</label>
+            <input type="date" value="2025-05-10">
+            <button class="btn-gen"><i class="fa-solid fa-chart-bar"></i> Generate</button>
+            <button class="btn-exp"><i class="fa-solid fa-file-pdf"></i> Export PDF</button>
+        </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="sum-grid">
+        <div class="sum-card">
+            <div class="val">RM 2,160.00</div>
+            <div class="lbl">Total Revenue</div>
+        </div>
+        <div class="sum-card">
+            <div class="val">38</div>
+            <div class="lbl">Total Orders</div>
+        </div>
+        <div class="sum-card">
+            <div class="val">RM 56.84</div>
+            <div class="lbl">Avg. Order Value</div>
+        </div>
+    </div>
+
+    <!-- BAR CHART -->
+    <div class="card">
+        <h2>Daily Revenue — 01 May to 10 May 2025</h2>
+        <div class="bar-chart">
+            <div class="b-item"><div class="b-fill" style="height:40%"></div><div class="b-lbl">1 May</div></div>
+            <div class="b-item"><div class="b-fill" style="height:55%"></div><div class="b-lbl">2 May</div></div>
+            <div class="b-item"><div class="b-fill" style="height:30%"></div><div class="b-lbl">3 May</div></div>
+            <div class="b-item"><div class="b-fill" style="height:72%"></div><div class="b-lbl">4 May</div></div>
+            <div class="b-item"><div class="b-fill hi" style="height:95%"></div><div class="b-lbl">5 May</div></div>
+            <div class="b-item"><div class="b-fill" style="height:60%"></div><div class="b-lbl">6 May</div></div>
+            <div class="b-item"><div class="b-fill" style="height:45%"></div><div class="b-lbl">7 May</div></div>
+            <div class="b-item"><div class="b-fill" style="height:80%"></div><div class="b-lbl">8 May</div></div>
+            <div class="b-item"><div class="b-fill" style="height:68%"></div><div class="b-lbl">9 May</div></div>
+            <div class="b-item"><div class="b-fill hi" style="height:88%"></div><div class="b-lbl">10 May</div></div>
+        </div>
+    </div>
+
+    <!-- SALES REPORT TABLE -->
+    <div class="card">
+        <h2>Sales Report — 01 May to 10 May 2025</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Receipt ID</th>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Amount (RM)</th>
+                    <th>Payment Method</th>
+                    <th>Payment</th>
+                    <th>Order Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>RCP-001</td><td><strong>#ORD-001</strong></td><td>Nurul Ain</td>
+                    <td>IKM UDE Jersey (M)</td><td>2</td><td><strong>111.98</strong></td>
+                    <td>eWallet — Touch'n Go</td>
+                    <td><span class="badge b-paid">Paid</span></td>
+                    <td><span class="badge b-pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td>RCP-002</td><td><strong>#ORD-002</strong></td><td>Hazwan Zaki</td>
+                    <td>Politeknik Ibrahim Sultan (L)</td><td>1</td><td><strong>49.99</strong></td>
+                    <td>Credit Card — Visa</td>
+                    <td><span class="badge b-paid">Paid</span></td>
+                    <td><span class="badge b-processing">Processing</span></td>
+                </tr>
+                <tr>
+                    <td>RCP-003</td><td><strong>#ORD-003</strong></td><td>Siti Rahmah</td>
+                    <td>Creative Team Jersey (S)</td><td>1</td><td><strong>52.99</strong></td>
+                    <td>eWallet — Boost</td>
+                    <td><span class="badge b-paid">Paid</span></td>
+                    <td><span class="badge b-shipped">Shipped</span></td>
+                </tr>
+                <tr>
+                    <td>RCP-004</td><td><strong>#ORD-004</strong></td><td>Farid Iman</td>
+                    <td>GLB RND VA Running Day (XL)</td><td>3</td><td><strong>164.97</strong></td>
+                    <td>Credit Card — Mastercard</td>
+                    <td><span class="badge b-paid">Paid</span></td>
+                    <td><span class="badge b-delivered">Delivered</span></td>
+                </tr>
+                <tr>
+                    <td>RCP-005</td><td><strong>#ORD-006</strong></td><td>Zulaikha Mohd</td>
+                    <td>Kolej Kediaman A Jersey (M)</td><td>4</td><td><strong>235.96</strong></td>
+                    <td>eWallet — Touch'n Go</td>
+                    <td><span class="badge b-paid">Paid</span></td>
+                    <td><span class="badge b-processing">Processing</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <span>Showing 1–5 of 38 transactions</span>
+            <div class="pager">
+                <button class="pg">‹</button>
+                <button class="pg on">1</button>
+                <button class="pg">2</button>
+                <button class="pg">3</button>
+                <button class="pg">›</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delete Product Popup</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body{
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background: rgba(50, 55, 65, 0.85);
+    }
+
+    /* Popup Box */
+    .popup{
+        width:420px;
+        background:white;
+        border-radius:12px;
+        padding:25px;
+        box-shadow:0 5px 20px rgba(0,0,0,0.3);
+    }
+
+    .popup-header{
+        display:flex;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    /* Icon Circle */
+    .icon{
+        width:45px;
+        height:45px;
+        border-radius:50%;
+        background:#ffe9e4;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        color:#ff5b2e;
+        font-size:24px;
+    }
+
+    .popup-title h2{
+        font-size:30px;
+        color:#222;
+        margin-bottom:5px;
+    }
+
+    .popup-title p{
+        color:#999;
+        font-size:15px;
+    }
+
+    .message{
+        margin-top:25px;
+        font-size:20px;
+        color:#444;
+    }
+
+    /* Buttons */
+    .buttons{
+        margin-top:30px;
+        display:flex;
+        justify-content:flex-end;
+        gap:15px;
+    }
+
+    .cancel-btn{
+        background:#7b8794;
+        color:white;
+        border:none;
+        padding:12px 22px;
+        border-radius:10px;
+        cursor:pointer;
+        font-size:16px;
+    }
+
+    .delete-btn{
+        background:#ff5b2e;
+        color:white;
+        border:none;
+        padding:12px 22px;
+        border-radius:10px;
+        cursor:pointer;
+        font-size:16px;
+    }
+
+    .cancel-btn:hover{
+        background:#69727d;
+    }
+
+    .delete-btn:hover{
+        background:#e84d22;
+    }
+</style>
+
+</head>
+<body>
+
+<div class="popup">
+
+    <div class="popup-header">
+
+        <div class="icon">
+            🗑
+        </div>
+
+        <div class="popup-title">
+            <h2>Delete Product</h2>
+            <p>This action cannot be undone</p>
+        </div>
+
+    </div>
+
+    <div class="message">
+        Are you sure you want to delete IKM UDE Jersey?
+    </div>
+
+    <div class="buttons">
+        <button class="cancel-btn">Cancel</button>
+        <button class="delete-btn">Confirm Delete</button>
+    </div>
+
+</div>
+
+</body>
+</html>

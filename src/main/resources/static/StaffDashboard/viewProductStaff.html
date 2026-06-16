@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Management - HELOK Staff</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+body { background:#d8f6f2; }
+.container { display:flex; min-height:100vh; }
+
+/* SIDEBAR */
+.sidebar { width:240px; background:#2b160f; color:white; padding-top:20px; position:fixed; height:100%; display:flex; flex-direction:column; }
+.logo { text-align:center; margin-bottom:40px; }
+.logo-box { width:85px; height:85px; background:white; margin:auto; display:flex; flex-direction:column; justify-content:center; align-items:center; border-radius:4px; color:#2b160f; font-weight:bold; }
+.logo-box h1 { font-size:42px; line-height:40px; }
+.logo-box p { font-size:11px; letter-spacing:2px; }
+.menu { padding:0 15px; flex:1; }
+.menu a { display:flex; align-items:center; gap:12px; text-decoration:none; color:white; padding:15px; border-radius:12px; margin-bottom:10px; transition:0.3s; font-size:15px; }
+.menu a:hover { background:#4d2d22; }
+.menu a.active { background:#4d2d22; color:#ff8a3d; }
+.menu a i { width:20px; }
+.logout { padding:0 15px; padding-bottom:20px; margin-top:auto; }
+.logout a { display:flex; align-items:center; gap:12px; text-decoration:none; color:rgba(255,180,180,0.85); padding:15px; border-radius:12px; transition:0.3s; font-size:15px; }
+.logout a:hover { background:#3a0a0a; color:#ffaaaa; }
+
+/* MAIN */
+.main { margin-left:240px; width:calc(100% - 240px); padding:30px; }
+.header h1 { font-size:38px; margin-bottom:8px; color:#222; }
+.header p { color:#666; margin-bottom:26px; font-size:16px; }
+
+.card { background:white; border-radius:18px; padding:28px; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+.card-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:22px; flex-wrap:wrap; gap:12px; }
+.card-top h2 { font-size:22px; color:#222; }
+.top-right { display:flex; align-items:center; gap:12px; }
+
+.search-box { padding:10px 14px; border:1.5px solid #ddd; border-radius:10px; font-size:14px; outline:none; width:200px; transition:border-color 0.2s; }
+.search-box:focus { border-color:#2b160f; }
+
+.add-btn { background:#4b184f; color:white; border:none; padding:12px 22px; border-radius:12px; cursor:pointer; font-size:14px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:background 0.2s; }
+.add-btn:hover { background:#68206d; }
+
+table { width:100%; border-collapse:collapse; }
+table th { text-align:left; padding:13px 12px; border-bottom:1px solid #ddd; color:#555; font-size:13px; text-transform:uppercase; letter-spacing:0.4px; }
+table td { padding:14px 12px; border-bottom:1px solid #f0f0f0; color:#444; font-size:14px; vertical-align:middle; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover td { background:#f9fdfd; }
+
+/* Product image — try real image, fallback to styled box */
+.prod-img {
+    width:44px; height:44px; border-radius:6px;
+    object-fit:cover; border:1px solid #e5e7eb; display:block;
+}
+
+.action-btn { border:none; width:32px; height:32px; border-radius:50%; color:white; cursor:pointer; margin-right:4px; font-size:13px; transition:opacity 0.2s; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; }
+.action-btn:hover { opacity:0.8; }
+.edit { background:#1565ff; }
+.delete { background:#d72626; }
+
+/* STOCK BAR */
+.stock-wrap { display:flex; align-items:center; gap:7px; }
+.stock-bar { width:55px; height:6px; background:#e5e7eb; border-radius:3px; overflow:hidden; }
+.sf { height:100%; border-radius:3px; }
+.sf-high { background:#15803d; } .sf-mid { background:#d97706; } .sf-low { background:#dc2626; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <div class="logo">
+        <div class="logo-box"><h1>H</h1><p>HELOK</p></div>
+    </div>
+    <div class="menu">
+        <a href="staffDashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+        <a href="viewProductStaff.html" class="active"><i class="fa-solid fa-cube"></i> Product Management</a>
+        <a href="viewOrderStaff.html"><i class="fa-regular fa-clock"></i> Order Management</a>
+        <a href="viewCustomerStaff.html"><i class="fa-regular fa-user"></i> Customer Management</a>
+        <a href="generateReport.html"><i class="fa-solid fa-chart-column"></i> Generate Report</a>
+        <a href="profileStaff.html"><i class="fa-solid fa-gear"></i> My Profile</a>
+    </div>
+    <div class="logout">
+        <a href="StaffLogin.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+    <div class="header">
+        <h1>Product Management</h1>
+        <p>View, add, edit and delete products</p>
+    </div>
+
+    <div class="card">
+        <div class="card-top">
+            <h2>All Products</h2>
+            <div class="top-right">
+                <input type="text" class="search-box" placeholder="Search product…">
+                <a href="createProductStaff.html" class="add-btn">
+                    <i class="fa-solid fa-plus"></i> Add Product
+                </a>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th><th>Name</th><th>Price (RM)</th><th>Material</th>
+                    <th>Color</th><th>Collar</th><th>Sleeve</th><th>Size</th>
+                    <th>Image</th><th>Stock</th><th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td><td><strong>IKM UDE Jersey</strong></td><td>55.99</td>
+                    <td>EyeletAir</td><td>Red</td><td>Round Neck</td><td>Short Sleeve</td><td>M</td>
+                    <td><img src="image/jersey1.jpg" class="prod-img" onerror="this.outerHTML='<div style=\'width:44px;height:44px;border-radius:6px;background:#d8f6f2;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:20px;\'>👕</div>'"></td>
+                    <td><div class="stock-wrap"><div class="stock-bar"><div class="sf sf-high" style="width:75%"></div></div>150</div></td>
+                    <td>
+                        <a href="editProductStaff.html" class="action-btn edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="deleteProductStaff.html" class="action-btn delete"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td><td><strong>Politeknik Ibrahim Sultan</strong></td><td>49.99</td>
+                    <td>InterlockX</td><td>Blue</td><td>V-Neck</td><td>Short Sleeve</td><td>L</td>
+                    <td><img src="image/jersey2.jpg" class="prod-img" onerror="this.outerHTML='<div style=\'width:44px;height:44px;border-radius:6px;background:#d8f6f2;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:20px;\'>👕</div>'"></td>
+                    <td><div class="stock-wrap"><div class="stock-bar"><div class="sf sf-high" style="width:100%"></div></div>200</div></td>
+                    <td>
+                        <a href="editProductStaff.html" class="action-btn edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="deleteProductStaff.html" class="action-btn delete"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td><td><strong>Creative Team Jersey</strong></td><td>52.99</td>
+                    <td>EyeletAir</td><td>Black</td><td>Round Neck</td><td>Long Sleeve</td><td>XL</td>
+                    <td><img src="image/jersey3.jpg" class="prod-img" onerror="this.outerHTML='<div style=\'width:44px;height:44px;border-radius:6px;background:#d8f6f2;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:20px;\'>👕</div>'"></td>
+                    <td><div class="stock-wrap"><div class="stock-bar"><div class="sf sf-high" style="width:90%"></div></div>180</div></td>
+                    <td>
+                        <a href="editProductStaff.html" class="action-btn edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="deleteProductStaff.html" class="action-btn delete"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td><td><strong>Kolej Kediaman A Jersey</strong></td><td>58.99</td>
+                    <td>EyeletAir</td><td>Blue</td><td>Round Neck</td><td>Short Sleeve</td><td>M</td>
+                    <td><img src="image/jersey9.jpg" class="prod-img" onerror="this.outerHTML='<div style=\'width:44px;height:44px;border-radius:6px;background:#d8f6f2;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:20px;\'>👕</div>'"></td>
+                    <td><div class="stock-wrap"><div class="stock-bar"><div class="sf sf-high" style="width:80%"></div></div>160</div></td>
+                    <td>
+                        <a href="editProductStaff.html" class="action-btn edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="deleteProductStaff.html" class="action-btn delete"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td><td><strong>Kolej Kediaman A Red</strong></td><td>57.99</td>
+                    <td>EyeletAir</td><td>Red</td><td>V-Neck</td><td>Short Sleeve</td><td>L</td>
+                    <td><img src="image\jersey12.jpg" class="prod-img" onerror="this.outerHTML='<div style=\'width:44px;height:44px;border-radius:6px;background:#d8f6f2;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:20px;\'>👕</div>'"></td>
+                    <td><div class="stock-wrap"><div class="stock-bar"><div class="sf sf-mid" style="width:70%"></div></div>140</div></td>
+                    <td>
+                        <a href="editProductStaff.html" class="action-btn edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="deleteProductStaff.html" class="action-btn delete"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>6</td><td><strong>Johor Team Jersey</strong></td><td>59.99</td>
+                    <td>InterlockX</td><td>White</td><td>Round Neck</td><td>Long Sleeve</td><td>XL</td>
+                    <td><img src="image/jersey6.jpg" class="prod-img" onerror="this.outerHTML='<div style=\'width:44px;height:44px;border-radius:6px;background:#d8f6f2;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:20px;\'>👕</div>'"></td>
+                    <td><div class="stock-wrap"><div class="stock-bar"><div class="sf sf-high" style="width:85%"></div></div>170</div></td>
+                    <td>
+                        <a href="editProductStaff.html" class="action-btn edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="deleteProductStaff.html" class="action-btn delete"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>7</td><td><strong>Kolej Kediaman A White</strong></td><td>56.99</td>
+                    <td>EyeletAir</td><td>White</td><td>Round Neck</td><td>Short Sleeve</td><td>M</td>
+                    <td><img src="image/jersey10.jpg" class="prod-img" onerror="this.outerHTML='<div style=\'width:44px;height:44px;border-radius:6px;background:#d8f6f2;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:20px;\'>👕</div>'"></td>
+                    <td><div class="stock-wrap"><div class="stock-bar"><div class="sf sf-mid" style="width:77%"></div></div>155</div></td>
+                    <td>
+                        <a href="editProductStaff.html" class="action-btn edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="deleteProductStaff.html" class="action-btn delete"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>8</td><td><strong>GLB RND VA Running Day</strong></td><td>54.99</td>
+                    <td>EyeletAir</td><td>Black</td><td>Round Neck</td><td>Short Sleeve</td><td>S</td>
+                    <td><img src="image/jersey11.jpg" class="prod-img" onerror="this.outerHTML='<div style=\'width:44px;height:44px;border-radius:6px;background:#d8f6f2;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:20px;\'>👕</div>'"></td>
+                    <td><div class="stock-wrap"><div class="stock-bar"><div class="sf sf-mid" style="width:65%"></div></div>130</div></td>
+                    <td>
+                        <a href="editProductStaff.html" class="action-btn edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="deleteProductStaff.html" class="action-btn delete"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>9</td><td><strong>Kolej Kediaman A Black</strong></td><td>53.99</td>
+                    <td>EyeletAir</td><td>Black</td><td>Round Neck</td><td>Long Sleeve</td><td>L</td>
+                    <td><img src="image/jersey8.jpg" class="prod-img" onerror="this.outerHTML='<div style=\'width:44px;height:44px;border-radius:6px;background:#d8f6f2;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:20px;\'>👕</div>'"></td>
+                    <td><div class="stock-wrap"><div class="stock-bar"><div class="sf sf-mid" style="width:72%"></div></div>145</div></td>
+                    <td>
+                        <a href="editProductStaff.html" class="action-btn edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="deleteProductStaff.html" class="action-btn delete"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>10</td><td><strong>Johor Navy V-Neck</strong></td><td>61.99</td>
+                    <td>InterlockX</td><td>Blue</td><td>V-Neck</td><td>Short Sleeve</td><td>XL</td>
+                    <td><img src="image/jersey5.jpg" class="prod-img" onerror="this.outerHTML='<div style=\'width:44px;height:44px;border-radius:6px;background:#d8f6f2;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:20px;\'>👕</div>'"></td>
+                    <td><div class="stock-wrap"><div class="stock-bar"><div class="sf sf-mid" style="width:62%"></div></div>125</div></td>
+                    <td>
+                        <a href="editProductStaff.html" class="action-btn edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="deleteProductStaff.html" class="action-btn delete"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>11</td><td><strong>Johor Dragon Edition</strong></td><td>64.99</td>
+                    <td>EyeletAir</td><td>Black</td><td>Round Neck</td><td>Long Sleeve</td><td>2XL</td>
+                    <td><img src="image/jersey4.jpg" class="prod-img" onerror="this.outerHTML='<div style=\'width:44px;height:44px;border-radius:6px;background:#d8f6f2;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:20px;\'>👕</div>'"></td>
+                    <td><div class="stock-wrap"><div class="stock-bar"><div class="sf sf-low" style="width:55%"></div></div>110</div></td>
+                    <td>
+                        <a href="editProductStaff.html" class="action-btn edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="deleteProductStaff.html" class="action-btn delete"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>12</td><td><strong>Digital Innovation Polo</strong></td><td>58.99</td>
+                    <td>EyeletAir</td><td>White</td><td>Round Neck</td><td>Short Sleeve</td><td>L</td>
+                    <td><img src="image/jersey7.jpg" class="prod-img" onerror="this.outerHTML='<div style=\'width:44px;height:44px;border-radius:6px;background:#d8f6f2;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:20px;\'>👕</div>'"></td>
+                    <td><div class="stock-wrap"><div class="stock-bar"><div class="sf sf-mid" style="width:67%"></div></div>135</div></td>
+                    <td>
+                        <a href="editProductStaff.html" class="action-btn edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="deleteProductStaff.html" class="action-btn delete"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

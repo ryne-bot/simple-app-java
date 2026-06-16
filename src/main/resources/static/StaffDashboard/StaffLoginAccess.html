@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Access Verification - HELOK</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+
+body {
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.modal {
+    background: white;
+    width: 400px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 30px rgba(0,0,0,0.5);
+}
+
+.modal-header {
+    background: #7b4397;
+    color: white;
+    padding: 20px 24px;
+    font-size: 17px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-body { padding: 26px 24px; }
+
+.modal-body label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.modal-body input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.modal-body input:focus { border-color: #7b4397; }
+
+.error-msg {
+    color: #dc2626;
+    font-size: 12.5px;
+    margin-top: 8px;
+    display: none;
+}
+
+.modal-footer {
+    background: #f9f9f9;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+.btn:hover { opacity: 0.85; }
+.btn-cancel { background: #6c757d; color: white; }
+.btn-verify { background: #5a2d82; color: white; }
+</style>
+</head>
+<body>
+
+<div class="modal">
+    <div class="modal-header">
+        🔒 Staff Access Verification
+    </div>
+    <div class="modal-body">
+        <label>Staff Access Code</label>
+        <input type="password" id="accessCode" placeholder="Enter access code">
+        <p id="error" class="error-msg">❌ Incorrect access code. Access denied.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-cancel" onclick="window.history.back()">Cancel</button>
+        <button class="btn btn-verify" onclick="checkAccess()">Verify Code</button>
+    </div>
+</div>
+
+<script>
+function checkAccess() {
+    const code = document.getElementById('accessCode').value;
+    const error = document.getElementById('error');
+    if (code === "HelokClothingSolution") {
+        window.location.href = "StaffLogin.html";
+    } else {
+        error.style.display = "block";
+    }
+}
+document.getElementById('accessCode').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') checkAccess();
+});
+</script>
+
+</body>
+</html>

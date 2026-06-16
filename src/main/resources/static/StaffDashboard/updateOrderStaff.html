@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Update Order - HELOK Staff</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+body { background:#d8f6f2; }
+.container { display:flex; min-height:100vh; }
+
+/* SIDEBAR */
+.sidebar { width:240px; background:#2b160f; color:white; padding-top:20px; position:fixed; height:100%; display:flex; flex-direction:column; }
+.logo { text-align:center; margin-bottom:40px; }
+.logo-box { width:85px; height:85px; background:white; margin:auto; display:flex; flex-direction:column; justify-content:center; align-items:center; border-radius:4px; color:#2b160f; font-weight:bold; }
+.logo-box h1 { font-size:42px; line-height:40px; }
+.logo-box p { font-size:11px; letter-spacing:2px; }
+.menu { padding:0 15px; flex:1; }
+.menu a { display:flex; align-items:center; gap:12px; text-decoration:none; color:white; padding:15px; border-radius:12px; margin-bottom:10px; transition:0.3s; font-size:15px; }
+.menu a:hover { background:#4d2d22; }
+.menu a.active { background:#4d2d22; color:#ff8a3d; }
+.menu a i { width:20px; }
+.logout { padding:0 15px; padding-bottom:20px; margin-top:auto; }
+.logout a { display:flex; align-items:center; gap:12px; text-decoration:none; color:rgba(255,180,180,0.85); padding:15px; border-radius:12px; transition:0.3s; font-size:15px; }
+.logout a:hover { background:#3a0a0a; color:#ffaaaa; }
+
+/* MAIN */
+.main { margin-left:240px; width:calc(100% - 240px); padding:30px; }
+
+.back-link { display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:#2b160f; font-weight:700; font-size:14px; margin-bottom:18px; padding:9px 16px; background:white; border-radius:10px; box-shadow:0 1px 4px rgba(0,0,0,0.08); transition:background 0.2s; }
+.back-link:hover { background:#f0fafa; }
+
+.header h1 { font-size:36px; color:#222; margin-bottom:6px; }
+.header p { color:#666; margin-bottom:24px; font-size:15px; }
+
+/* ORDER SUMMARY CARD */
+.order-summary-card {
+    background: linear-gradient(135deg, #2b160f, #4d2d22);
+    border-radius:16px; padding:22px 26px;
+    margin-bottom:24px; color:white;
+    display:flex; align-items:center; gap:24px; flex-wrap:wrap;
+}
+.order-id { font-size:22px; font-weight:700; margin-bottom:4px; }
+.order-meta { font-size:13px; color:rgba(255,255,255,0.7); }
+.order-price { margin-left:auto; text-align:right; }
+.order-price .price-val { font-size:28px; font-weight:700; }
+.order-price .price-lbl { font-size:12px; color:rgba(255,255,255,0.6); }
+
+/* BADGE */
+.badge { display:inline-block; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; }
+.b-pending    { background:#FEF9C3; color:#92400E; }
+.b-processing { background:#DBEAFE; color:#1E40AF; }
+.b-shipped    { background:#EDE9FE; color:#5B21B6; }
+.b-delivered  { background:#DCFCE7; color:#15803D; }
+.b-cancelled  { background:#FEE2E2; color:#991B1B; }
+.b-paid       { background:#DCFCE7; color:#15803D; }
+
+/* FORM CARD */
+.card { background:white; border-radius:18px; padding:28px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:22px; }
+.card h2 { font-size:20px; color:#222; font-weight:700; margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid #d8f6f2; display:flex; align-items:center; gap:10px; }
+
+/* ORDER DETAILS GRID */
+.detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:24px; }
+.detail-item { background:#f9f9f9; border-radius:10px; padding:14px 16px; }
+.detail-item .lbl { font-size:11px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px; display:flex; align-items:center; gap:6px; }
+.detail-item .val { font-size:15px; color:#222; font-weight:600; }
+
+/* STATUS UPDATE */
+.status-section { margin-top:8px; }
+.status-label { font-size:14px; font-weight:700; color:#444; margin-bottom:10px; display:block; }
+
+.status-options { display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; margin-bottom:22px; }
+
+.status-option { position:relative; }
+.status-option input[type="radio"] { display:none; }
+.status-option label {
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    padding:14px 8px; border:2px solid #e5e7eb; border-radius:12px;
+    cursor:pointer; transition:all 0.2s; background:white; text-align:center;
+}
+.status-option label:hover { border-color:#2b160f; background:#fdf8f5; }
+.status-option input[type="radio"]:checked + label { border-color:#2b160f; background:#fdf8f5; }
+.status-icon { font-size:22px; }
+.status-name { font-size:12px; font-weight:700; color:#444; }
+.status-desc { font-size:11px; color:#888; }
+
+/* highlight current */
+.status-option input[type="radio"]#status-pending:checked + label { border-color:#d97706; background:#fffbeb; }
+.status-option input[type="radio"]#status-processing:checked + label { border-color:#1d4ed8; background:#eff6ff; }
+.status-option input[type="radio"]#status-shipped:checked + label { border-color:#7c3aed; background:#f5f3ff; }
+.status-option input[type="radio"]#status-delivered:checked + label { border-color:#15803d; background:#f0fdf4; }
+.status-option input[type="radio"]#status-cancelled:checked + label { border-color:#dc2626; background:#fef2f2; }
+
+.notes-group { display:flex; flex-direction:column; gap:6px; margin-bottom:22px; }
+.notes-group label { font-size:13px; font-weight:700; color:#444; }
+.notes-group textarea { width:100%; padding:12px 14px; border:1.5px solid #ddd; border-radius:10px; font-size:14px; font-family:Arial,sans-serif; outline:none; resize:vertical; min-height:80px; transition:border-color 0.2s; box-sizing:border-box; }
+.notes-group textarea:focus { border-color:#2b160f; }
+
+.form-actions { display:flex; justify-content:flex-end; gap:12px; }
+.btn-cancel { padding:12px 22px; border:1.5px solid #ddd; background:white; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; color:#444; transition:all 0.2s; text-decoration:none; display:inline-flex; align-items:center; gap:7px; }
+.btn-cancel:hover { background:#f5f5f5; }
+.btn-save { padding:12px 22px; border:none; background:#4b184f; color:white; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; transition:background 0.2s; display:inline-flex; align-items:center; gap:7px; text-decoration:none; }
+.btn-save:hover { background:#68206d; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <div class="logo">
+        <div class="logo-box"><h1>H</h1><p>HELOK</p></div>
+    </div>
+    <div class="menu">
+        <a href="staffDashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+        <a href="viewProductStaff.html"><i class="fa-solid fa-cube"></i> Product Management</a>
+        <a href="viewOrderStaff.html" class="active"><i class="fa-regular fa-clock"></i> Order Management</a>
+        <a href="viewCustomerStaff.html"><i class="fa-regular fa-user"></i> Customer Management</a>
+        <a href="generateReport.html"><i class="fa-solid fa-chart-column"></i> Generate Report</a>
+        <a href="profileStaff.html"><i class="fa-solid fa-gear"></i> My Profile</a>
+    </div>
+    <div class="logout">
+        <a href="StaffLogin.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+    <a href="viewOrderStaff.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Orders</a>
+
+    <div class="header">
+        <h1>Update Order Status</h1>
+        <p>Change the delivery status for this order.</p>
+    </div>
+
+    <!-- ORDER SUMMARY BANNER -->
+    <div class="order-summary-card">
+        <div>
+            <div class="order-id">#ORD-001</div>
+            <div class="order-meta">Customer: <strong>Nurul Ain binti Hamid</strong> &nbsp;·&nbsp; CUST-001</div>
+            <div class="order-meta" style="margin-top:4px;">Product: <strong>IKM UDE Jersey</strong> &nbsp;·&nbsp; DTL-001 &nbsp;·&nbsp; Size M &nbsp;·&nbsp; Short Sleeve &nbsp;·&nbsp; Round Neck</div>
+            <div class="order-meta" style="margin-top:4px;">Ordered: 10 May 2025 &nbsp;·&nbsp; Qty: 2</div>
+        </div>
+        <div class="order-price">
+            <div class="price-val">RM 111.98</div>
+            <div class="price-lbl">Total Amount</div>
+            <div style="margin-top:6px;"><span class="badge b-paid">Paid</span></div>
+        </div>
+    </div>
+
+    <!-- ORDER INFO GRID -->
+    <div class="card">
+        <h2><i class="fa-solid fa-circle-info" style="color:#2b160f;"></i> Order Details</h2>
+        <div class="detail-grid">
+            <div class="detail-item">
+                <div class="lbl"><i class="fa-solid fa-hashtag"></i> Order ID</div>
+                <div class="val">#ORD-001</div>
+            </div>
+            <div class="detail-item">
+                <div class="lbl"><i class="fa-solid fa-user"></i> Customer</div>
+                <div class="val">Nurul Ain binti Hamid</div>
+            </div>
+            <div class="detail-item">
+                <div class="lbl"><i class="fa-solid fa-shirt"></i> Product</div>
+                <div class="val">IKM UDE Jersey (DTL-001)</div>
+            </div>
+            <div class="detail-item">
+                <div class="lbl"><i class="fa-solid fa-expand"></i> Variant</div>
+                <div class="val">Size M · Short Sleeve · Round Neck</div>
+            </div>
+            <div class="detail-item">
+                <div class="lbl"><i class="fa-solid fa-boxes-stacked"></i> Quantity</div>
+                <div class="val">2 units</div>
+            </div>
+            <div class="detail-item">
+                <div class="lbl"><i class="fa-solid fa-calendar"></i> Order Date</div>
+                <div class="val">10 May 2025</div>
+            </div>
+            <div class="detail-item">
+                <div class="lbl"><i class="fa-solid fa-credit-card"></i> Payment</div>
+                <div class="val"><span class="badge b-paid">Paid</span> &nbsp; eWallet — Touch'n Go</div>
+            </div>
+            <div class="detail-item">
+                <div class="lbl"><i class="fa-solid fa-money-bill-wave"></i> Amount</div>
+                <div class="val">RM 111.98</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UPDATE STATUS CARD -->
+    <div class="card">
+        <h2><i class="fa-solid fa-arrows-rotate" style="color:#2b160f;"></i> Update Order Status</h2>
+
+        <div class="status-section">
+            <span class="status-label">Select the new status for this order:</span>
+
+            <div class="status-options">
+                <div class="status-option">
+                    <input type="radio" name="orderStatus" id="status-pending" value="Pending" checked>
+                    <label for="status-pending">
+                        <span class="status-icon">🟡</span>
+                        <span class="status-name">Pending</span>
+                        <span class="status-desc">Awaiting action</span>
+                    </label>
+                </div>
+                <div class="status-option">
+                    <input type="radio" name="orderStatus" id="status-processing" value="Processing">
+                    <label for="status-processing">
+                        <span class="status-icon">🔵</span>
+                        <span class="status-name">Processing</span>
+                        <span class="status-desc">Being prepared</span>
+                    </label>
+                </div>
+                <div class="status-option">
+                    <input type="radio" name="orderStatus" id="status-shipped" value="Shipped">
+                    <label for="status-shipped">
+                        <span class="status-icon">🟣</span>
+                        <span class="status-name">Shipped</span>
+                        <span class="status-desc">Out for delivery</span>
+                    </label>
+                </div>
+                <div class="status-option">
+                    <input type="radio" name="orderStatus" id="status-delivered" value="Delivered">
+                    <label for="status-delivered">
+                        <span class="status-icon">🟢</span>
+                        <span class="status-name">Delivered</span>
+                        <span class="status-desc">Order received</span>
+                    </label>
+                </div>
+                <div class="status-option">
+                    <input type="radio" name="orderStatus" id="status-cancelled" value="Cancelled">
+                    <label for="status-cancelled">
+                        <span class="status-icon">🔴</span>
+                        <span class="status-name">Cancelled</span>
+                        <span class="status-desc">Order cancelled</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="notes-group">
+                <label><i class="fa-regular fa-comment-dots"></i> Remarks / Notes (Optional)</label>
+                <textarea placeholder="e.g. Parcel dispatched via Pos Laju, tracking no. EX123456789MY"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <a href="viewOrderStaff.html" class="btn-cancel"><i class="fa-solid fa-xmark"></i> Cancel</a>
+                <a href="viewOrderStaff.html" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Save Status</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+</body>
+</html>

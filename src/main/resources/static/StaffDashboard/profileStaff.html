@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile - HELOK Staff</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+body { background:#d8f6f2; }
+.wrap { display:flex; min-height:100vh; }
+
+.sidebar { width:240px; background:#2b160f; color:white; padding-top:20px; position:fixed; height:100%; display:flex; flex-direction:column; }
+.logo { text-align:center; margin-bottom:40px; }
+.logo-box { width:85px; height:85px; background:white; margin:auto; display:flex; flex-direction:column; justify-content:center; align-items:center; border-radius:4px; color:#2b160f; font-weight:bold; }
+.logo-box h1 { font-size:42px; line-height:40px; }
+.logo-box p { font-size:11px; letter-spacing:2px; }
+.menu { padding:0 15px; flex:1; }
+.menu a { display:flex; align-items:center; gap:12px; text-decoration:none; color:white; padding:15px; border-radius:12px; margin-bottom:8px; transition:0.2s; font-size:15px; }
+.menu a:hover { background:#4d2d22; }
+.menu a.active { background:#4d2d22; color:#ff8a3d; }
+.menu a i { width:20px; }
+.logout { padding:0 15px 20px; margin-top:auto; }
+.logout a { display:flex; align-items:center; gap:12px; text-decoration:none; color:rgba(255,180,180,0.85); padding:15px; border-radius:12px; transition:0.2s; font-size:15px; }
+.logout a:hover { background:#3a0a0a; }
+
+.main { margin-left:240px; width:calc(100% - 240px); min-height:100vh; }
+
+.top-header { background:#6d2d91; color:white; padding:28px 40px; }
+.back { font-size:14px; margin-bottom:10px; display:inline-flex; align-items:center; gap:8px; color:rgba(255,255,255,0.8); text-decoration:none; }
+.back:hover { color:white; }
+.top-header h1 { font-size:40px; font-weight:700; }
+
+.content { padding:36px; }
+
+.profile-card { background:white; border-radius:18px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.08); }
+
+.profile-top { background:#f7f7f7; padding:40px; display:flex; justify-content:center; }
+.profile-name { text-align:center; }
+.profile-name h2 { font-size:36px; margin-bottom:4px; }
+.profile-name p { color:#777; margin-bottom:16px; }
+.staff-badge { display:inline-flex; align-items:center; gap:8px; padding:9px 18px; border:1px solid #ddd; border-radius:25px; font-size:14px; background:white; }
+
+.profile-body { padding:36px; }
+.section-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:26px; }
+.section-row h3 { font-size:24px; font-weight:700; }
+.edit-btn { background:#5f2d86; color:white; border:none; padding:11px 20px; border-radius:10px; cursor:pointer; font-size:14px; font-weight:600; display:inline-flex; align-items:center; gap:7px; text-decoration:none; transition:0.2s; }
+.edit-btn:hover { background:#4a2268; }
+
+.form-group { margin-bottom:18px; }
+.form-group label { display:flex; align-items:center; gap:7px; margin-bottom:7px; font-weight:500; color:#555; font-size:14px; }
+.input-box { width:100%; padding:13px 15px; border:1px solid #ddd; border-radius:10px; font-size:14px; background:#fafafa; color:#555; font-family:'Poppins',sans-serif; }
+
+.small-text { font-size:12px; color:#aaa; margin-top:4px; }
+
+.employment { margin-top:30px; }
+.employment h3 { font-size:20px; font-weight:700; margin-bottom:16px; }
+.employment-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.emp-box { border:1px solid #eee; border-radius:12px; padding:18px; }
+.emp-box p { color:#888; margin-bottom:6px; font-size:13px; display:flex; align-items:center; gap:6px; }
+.emp-box h4 { font-size:22px; font-weight:700; }
+.status { color:green; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="sidebar">
+    <div class="logo"><div class="logo-box"><h1>H</h1><p>HELOK</p></div></div>
+    <div class="menu">
+        <a href="staffDashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+        <a href="viewProductStaff.html"><i class="fa-solid fa-cube"></i> Product Management</a>
+        <a href="viewOrderStaff.html"><i class="fa-regular fa-clock"></i> Order Management</a>
+        <a href="viewCustomerStaff.html"><i class="fa-regular fa-user"></i> Customer Management</a>
+        <a href="generateReport.html"><i class="fa-solid fa-chart-column"></i> Generate Report</a>
+        <a href="profileStaff.html" class="active"><i class="fa-solid fa-gear"></i> My Profile</a>
+    </div>
+    <div class="logout"><a href="StaffLogin.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></div>
+</div>
+
+<div class="main">
+    <div class="top-header">
+        <a href="staffDashboard.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+        <h1>My Profile</h1>
+    </div>
+
+    <div class="content">
+        <div class="profile-card">
+            <div class="profile-top">
+                <div class="profile-name">
+                    <h2>Sean</h2>
+                    <p>Staff</p>
+                    <div class="staff-badge"><i class="fa-regular fa-circle"></i> Staff Member</div>
+                </div>
+            </div>
+
+            <div class="profile-body">
+                <div class="section-row">
+                    <h3>Staff Information</h3>
+                    <a href="editStaff.html" class="edit-btn"><i class="fa-solid fa-pen"></i> Edit Profile</a>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-regular fa-id-badge"></i> Employee ID</label>
+                    <input type="text" class="input-box" value="STF007" readonly>
+                    <div class="small-text">Employee ID cannot be changed</div>
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-regular fa-user"></i> Full Name</label>
+                    <input type="text" class="input-box" value="Sean" readonly>
+                    <div class="small-text">Name cannot be changed</div>
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-regular fa-envelope"></i> Email Address</label>
+                    <input type="email" class="input-box" value="sean@gmail.com" readonly>
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-solid fa-phone"></i> Phone Number</label>
+                    <input type="text" class="input-box" value="013092009" readonly>
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-solid fa-location-dot"></i> Address</label>
+                    <input type="text" class="input-box" value="Klang, Selangor" readonly>
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-regular fa-credit-card"></i> Identification Card (IC)</label>
+                    <input type="text" class="input-box" value="090113070052" readonly>
+                    <div class="small-text">Identification Card cannot be changed</div>
+                </div>
+
+                <div class="employment">
+                    <h3>Employment Details</h3>
+                    <div class="employment-grid">
+                        <div class="emp-box">
+                            <p><i class="fa-regular fa-calendar"></i> Join Date</p>
+                            <h4>2024-01-15</h4>
+                        </div>
+                        <div class="emp-box">
+                            <p><i class="fa-regular fa-clock"></i> Employment Status</p>
+                            <h4 class="status">Active</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

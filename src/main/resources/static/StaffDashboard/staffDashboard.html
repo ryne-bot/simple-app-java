@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - HELOK Staff</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+body { background:#d8f6f2; }
+.container { display:flex; min-height:100vh; }
+
+/* ===== SIDEBAR ===== */
+.sidebar { width:240px; background:#2b160f; color:white; padding-top:20px; position:fixed; height:100%; display:flex; flex-direction:column; }
+.logo { text-align:center; margin-bottom:40px; }
+.logo-box { width:85px; height:85px; background:white; margin:auto; display:flex; flex-direction:column; justify-content:center; align-items:center; border-radius:4px; color:#2b160f; font-weight:bold; }
+.logo-box h1 { font-size:42px; line-height:40px; }
+.logo-box p { font-size:11px; letter-spacing:2px; }
+.menu { padding:0 15px; flex:1; }
+.menu a { display:flex; align-items:center; gap:12px; text-decoration:none; color:white; padding:15px; border-radius:12px; margin-bottom:10px; transition:0.3s; font-size:15px; }
+.menu a:hover { background:#4d2d22; }
+.menu a.active { background:#4d2d22; color:#ff8a3d; }
+.menu a i { width:20px; }
+.logout { padding:0 15px; padding-bottom:20px; margin-top:auto; }
+.logout a { display:flex; align-items:center; gap:12px; text-decoration:none; color:rgba(255,180,180,0.85); padding:15px; border-radius:12px; transition:0.3s; font-size:15px; }
+.logout a:hover { background:#3a0a0a; color:#ffaaaa; }
+
+/* ===== MAIN ===== */
+.main { margin-left:240px; width:calc(100% - 240px); padding:30px; }
+.header { margin-bottom:28px; }
+.header h1 { font-size:38px; color:#222; margin-bottom:6px; }
+.header p { color:#666; font-size:16px; }
+
+/* ===== STAT CARDS ===== */
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-bottom:28px; }
+.stat-card { background:white; border-radius:14px; padding:22px; box-shadow:0 2px 8px rgba(0,0,0,0.07); display:flex; align-items:center; gap:16px; }
+.stat-icon { width:52px; height:52px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:22px; color:white; flex-shrink:0; }
+.si-brown  { background:#2b160f; }
+.si-teal   { background:#0f766e; }
+.si-orange { background:#c2410c; }
+.si-green  { background:#15803d; }
+.stat-info .val { font-size:28px; font-weight:700; color:#222; line-height:1; }
+.stat-info .lbl { font-size:13px; color:#666; margin-top:4px; }
+.stat-info .chg { font-size:12px; font-weight:700; margin-top:4px; }
+.chg.up { color:#15803d; } .chg.down { color:#dc2626; }
+
+/* ===== CONTENT GRID ===== */
+.content-grid { display:grid; grid-template-columns:2fr 1fr; gap:22px; }
+
+/* ===== CARDS ===== */
+.card { background:white; border-radius:16px; padding:26px; box-shadow:0 2px 8px rgba(0,0,0,0.07); margin-bottom:22px; }
+.card-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+.card-top h2 { font-size:20px; color:#222; }
+.view-btn { background:#2b160f; color:white; border:none; padding:10px 18px; border-radius:10px; cursor:pointer; font-size:14px; font-weight:700; text-decoration:none; display:inline-block; transition:background 0.2s; }
+.view-btn:hover { background:#4d2d22; }
+
+/* ===== TABLE ===== */
+table { width:100%; border-collapse:collapse; }
+thead tr { background:#f5f5f5; }
+th { padding:12px 14px; text-align:left; font-size:12px; color:#888; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; border-bottom:1px solid #eee; }
+td { padding:13px 14px; font-size:14px; color:#444; border-bottom:1px solid #f5f5f5; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover td { background:#f9fdfd; }
+
+/* BADGE */
+.badge { display:inline-block; padding:4px 11px; border-radius:20px; font-size:12px; font-weight:700; }
+.b-pending    { background:#FEF9C3; color:#92400E; }
+.b-processing { background:#DBEAFE; color:#1E40AF; }
+.b-shipped    { background:#EDE9FE; color:#5B21B6; }
+.b-delivered  { background:#DCFCE7; color:#15803D; }
+.b-cancelled  { background:#FEE2E2; color:#991B1B; }
+
+/* QUICK ACTIONS */
+.qa-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.qa-btn { display:flex; align-items:center; gap:12px; padding:15px 13px; border:1.5px solid #e5e7eb; border-radius:12px; background:white; text-decoration:none; color:#222; font-size:14px; font-weight:700; transition:all 0.2s; }
+.qa-btn:hover { border-color:#2b160f; background:#fdf8f5; }
+.qa-icon { width:38px; height:38px; border-radius:8px; background:#d8f6f2; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+
+/* ORDER SUMMARY */
+.os-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid #f5f5f5; font-size:14px; }
+.os-row:last-child { border-bottom:none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <div class="logo">
+        <div class="logo-box"><h1>H</h1><p>HELOK</p></div>
+    </div>
+    <div class="menu">
+        <a href="staffDashboard.html" class="active"><i class="fa-solid fa-house"></i> Dashboard</a>
+        <a href="viewProductStaff.html"><i class="fa-solid fa-cube"></i> Product Management</a>
+        <a href="viewOrderStaff.html"><i class="fa-regular fa-clock"></i> Order Management</a>
+        <a href="viewCustomerStaff.html"><i class="fa-regular fa-user"></i> Customer Management</a>
+        <a href="generateReport.html"><i class="fa-solid fa-chart-column"></i> Generate Report</a>
+        <a href="profileStaff.html"><i class="fa-solid fa-gear"></i> My Profile</a>
+    </div>
+    <div class="logout">
+        <a href="StaffLogin.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+    <div class="header">
+        <h1>Welcome, Staff Members! 👋</h1>
+        <p>Here's what's happening with HELOK Clothing today.</p>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon si-brown"><i class="fa-solid fa-cube"></i></div>
+            <div class="stat-info">
+                <div class="val">12</div>
+                <div class="lbl">Total Products</div>
+                <div class="chg up">↑ 2 this week</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon si-orange"><i class="fa-regular fa-clock"></i></div>
+            <div class="stat-info">
+                <div class="val">212</div>
+                <div class="lbl">Total Orders</div>
+                <div class="chg up">↑ 12 today</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon si-teal"><i class="fa-regular fa-user"></i></div>
+            <div class="stat-info">
+                <div class="val">89</div>
+                <div class="lbl">Total Customers</div>
+                <div class="chg up">↑ 5 new</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon si-green"><i class="fa-solid fa-money-bill-wave"></i></div>
+            <div class="stat-info">
+                <div class="val">RM 6,840</div>
+                <div class="lbl">Total Revenue</div>
+                <div class="chg down">↓ 2% this month</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENT GRID -->
+    <div class="content-grid">
+
+        <!-- LEFT: Recent Orders -->
+        <div>
+            <div class="card">
+                <div class="card-top">
+                    <h2>Recent Orders</h2>
+                    <a href="viewOrderStaff.html" class="view-btn">View All</a>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th><th>Customer</th><th>Product</th><th>Amount (RM)</th><th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>#ORD-001</strong></td><td>Nurul Ain</td><td>IKM UDE Jersey (M)</td><td><strong>55.99</strong></td><td><span class="badge b-pending">Pending</span></td></tr>
+                        <tr><td><strong>#ORD-002</strong></td><td>Hazwan Zaki</td><td>Politeknik Ibrahim Sultan (L)</td><td><strong>49.99</strong></td><td><span class="badge b-processing">Processing</span></td></tr>
+                        <tr><td><strong>#ORD-003</strong></td><td>Siti Rahmah</td><td>Creative Team Jersey (S)</td><td><strong>52.99</strong></td><td><span class="badge b-shipped">Shipped</span></td></tr>
+                        <tr><td><strong>#ORD-004</strong></td><td>Farid Iman</td><td>GLB Running Day (XL)</td><td><strong>54.99</strong></td><td><span class="badge b-delivered">Delivered</span></td></tr>
+                        <tr><td><strong>#ORD-005</strong></td><td>Amirul Hakim</td><td>Johor Team Jersey (M)</td><td><strong>59.99</strong></td><td><span class="badge b-cancelled">Cancelled</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div>
+            <div class="card">
+                <div class="card-top"><h2>Quick Actions</h2></div>
+                <div class="qa-grid">
+                    <a href="createProductStaff.html" class="qa-btn"><div class="qa-icon"><i class="fa-solid fa-plus"></i></div>Add Product</a>
+                    <a href="viewOrderStaff.html" class="qa-btn"><div class="qa-icon"><i class="fa-solid fa-clock"></i></div>Orders</a>
+                    <a href="viewCustomerStaff.html" class="qa-btn"><div class="qa-icon"><i class="fa-solid fa-users"></i></div>Customers</a>
+                    <a href="generateReport.html" class="qa-btn"><div class="qa-icon"><i class="fa-solid fa-chart-column"></i></div>Reports</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-top"><h2>Order Status</h2></div>
+                <div class="os-row"><span>🟡 Pending</span><span class="badge b-pending">8</span></div>
+                <div class="os-row"><span>🔵 Processing</span><span class="badge b-processing">15</span></div>
+                <div class="os-row"><span>🟣 Shipped</span><span class="badge b-shipped">12</span></div>
+                <div class="os-row"><span>🟢 Delivered</span><span class="badge b-delivered">174</span></div>
+                <div class="os-row"><span>🔴 Cancelled</span><span class="badge b-cancelled">3</span></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</div>
+</body>
+</html>

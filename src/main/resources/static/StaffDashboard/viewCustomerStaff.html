@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Management - HELOK Staff</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+body { background:#d8f6f2; }
+.container { display:flex; min-height:100vh; }
+
+/* SIDEBAR */
+.sidebar { width:240px; background:#2b160f; color:white; padding-top:20px; position:fixed; height:100%; display:flex; flex-direction:column; }
+.logo { text-align:center; margin-bottom:40px; }
+.logo-box { width:85px; height:85px; background:white; margin:auto; display:flex; flex-direction:column; justify-content:center; align-items:center; border-radius:4px; color:#2b160f; font-weight:bold; }
+.logo-box h1 { font-size:42px; line-height:40px; }
+.logo-box p { font-size:11px; letter-spacing:2px; }
+.menu { padding:0 15px; flex:1; }
+.menu a { display:flex; align-items:center; gap:12px; text-decoration:none; color:white; padding:15px; border-radius:12px; margin-bottom:10px; transition:0.3s; font-size:15px; }
+.menu a:hover { background:#4d2d22; }
+.menu a.active { background:#4d2d22; color:#ff8a3d; }
+.menu a i { width:20px; }
+.logout { padding:0 15px; padding-bottom:20px; margin-top:auto; }
+.logout a { display:flex; align-items:center; gap:12px; text-decoration:none; color:rgba(255,180,180,0.85); padding:15px; border-radius:12px; transition:0.3s; font-size:15px; }
+.logout a:hover { background:#3a0a0a; color:#ffaaaa; }
+
+/* MAIN */
+.main { margin-left:240px; width:calc(100% - 240px); padding:30px; }
+.header h1 { font-size:38px; color:#222; margin-bottom:8px; }
+.header p { color:#666; margin-bottom:24px; font-size:16px; }
+
+.card { background:white; border-radius:18px; padding:28px; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+.card-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px; }
+.card-top h2 { font-size:22px; color:#222; }
+
+.search-box { padding:10px 14px; border:1.5px solid #ddd; border-radius:10px; font-size:14px; outline:none; width:250px; transition:border-color 0.2s; }
+.search-box:focus { border-color:#2b160f; }
+
+table { width:100%; border-collapse:collapse; }
+thead tr { background:#f5f5f5; }
+th { padding:12px 13px; text-align:left; font-size:12px; color:#888; text-transform:uppercase; letter-spacing:0.4px; font-weight:700; border-bottom:1px solid #eee; }
+td { padding:13px 13px; font-size:14px; color:#444; border-bottom:1px solid #f5f5f5; vertical-align:middle; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover td { background:#f9fdfd; }
+
+.av { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px; flex-shrink:0; }
+
+.badge { display:inline-block; padding:4px 11px; border-radius:20px; font-size:12px; font-weight:700; }
+.b-active { background:#DCFCE7; color:#15803D; }
+.b-orders { background:#DBEAFE; color:#1E40AF; }
+
+.view-btn { background:white; border:1.5px solid #ddd; padding:6px 14px; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; color:#222; transition:all 0.2s; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+.view-btn:hover { border-color:#2b160f; background:#fdf8f5; }
+
+.footer-row { display:flex; justify-content:space-between; align-items:center; margin-top:18px; font-size:13.5px; color:#666; }
+.page-btns { display:flex; gap:6px; }
+.pg { width:32px; height:32px; border:1.5px solid #ddd; border-radius:8px; background:white; font-size:13px; font-weight:700; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; }
+.pg:hover, .pg.active { background:#2b160f; color:white; border-color:#2b160f; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <div class="logo">
+        <div class="logo-box"><h1>H</h1><p>HELOK</p></div>
+    </div>
+    <div class="menu">
+        <a href="staffDashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+        <a href="viewProductStaff.html"><i class="fa-solid fa-cube"></i> Product Management</a>
+        <a href="viewOrderStaff.html"><i class="fa-regular fa-clock"></i> Order Management</a>
+        <a href="viewCustomerStaff.html" class="active"><i class="fa-regular fa-user"></i> Customer Management</a>
+        <a href="generateReport.html"><i class="fa-solid fa-chart-column"></i> Generate Report</a>
+        <a href="profileStaff.html"><i class="fa-solid fa-gear"></i> My Profile</a>
+    </div>
+    <div class="logout">
+        <a href="StaffLogin.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+    <div class="header">
+        <h1>Customer Management</h1>
+        <p>View all registered customers and their order history.</p>
+    </div>
+
+    <div class="card">
+        <div class="card-top">
+            <h2>All Customers <span style="font-size:15px;color:#888;font-weight:400;">(89 registered)</span></h2>
+            <input type="text" class="search-box" placeholder="Search name, email or IC…">
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer</th><th>Cust ID</th><th>Email</th>
+                    <th>Phone</th><th>IC Number</th><th>Address</th>
+                    <th>Orders</th><th>Status</th><th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><div style="display:flex;align-items:center;gap:10px;"><div class="av" style="background:#DBEAFE;color:#1E40AF;">N</div><strong>Nurul Ain binti Hamid</strong></div></td>
+                    <td>CUST-001</td><td>nurul@email.com</td><td>+60 12-111 2233</td>
+                    <td>980101-14-1234</td><td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">No. 12, Jln Maju, KL</td>
+                    <td><span class="badge b-orders">4 orders</span></td>
+                    <td><span class="badge b-active">Active</span></td>
+                    <td><a href="#" class="view-btn"><i class="fa-solid fa-eye"></i> View</a></td>
+                </tr>
+                <tr>
+                    <td><div style="display:flex;align-items:center;gap:10px;"><div class="av" style="background:#EDE9FE;color:#5B21B6;">H</div><strong>Hazwan bin Zaki</strong></div></td>
+                    <td>CUST-003</td><td>hazwan@email.com</td><td>+60 11-222 3344</td>
+                    <td>950202-10-5678</td><td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Apt 3B, Jln Damai, PJ</td>
+                    <td><span class="badge b-orders">2 orders</span></td>
+                    <td><span class="badge b-active">Active</span></td>
+                    <td><a href="#" class="view-btn"><i class="fa-solid fa-eye"></i> View</a></td>
+                </tr>
+                <tr>
+                    <td><div style="display:flex;align-items:center;gap:10px;"><div class="av" style="background:#FEE2E2;color:#991B1B;">S</div><strong>Siti Rahmah binti Yusof</strong></div></td>
+                    <td>CUST-007</td><td>siti@email.com</td><td>+60 19-333 4455</td>
+                    <td>001212-06-9012</td><td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">No. 5, Taman Bahagia, SB</td>
+                    <td><span class="badge b-orders">7 orders</span></td>
+                    <td><span class="badge b-active">Active</span></td>
+                    <td><a href="#" class="view-btn"><i class="fa-solid fa-eye"></i> View</a></td>
+                </tr>
+                <tr>
+                    <td><div style="display:flex;align-items:center;gap:10px;"><div class="av" style="background:#FEF9C3;color:#92400E;">F</div><strong>Farid Iman bin Roslan</strong></div></td>
+                    <td>CUST-012</td><td>farid@email.com</td><td>+60 16-444 5566</td>
+                    <td>880808-08-3456</td><td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">No. 88, Jln Kenanga, Melaka</td>
+                    <td><span class="badge b-orders">9 orders</span></td>
+                    <td><span class="badge b-active">Active</span></td>
+                    <td><a href="#" class="view-btn"><i class="fa-solid fa-eye"></i> View</a></td>
+                </tr>
+                <tr>
+                    <td><div style="display:flex;align-items:center;gap:10px;"><div class="av" style="background:#DCFCE7;color:#15803D;">A</div><strong>Amirul Hakim bin Aziz</strong></div></td>
+                    <td>CUST-015</td><td>amirul@email.com</td><td>+60 17-555 6677</td>
+                    <td>010315-14-7890</td><td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">No. 33, Jln Setia, Shah Alam</td>
+                    <td><span class="badge b-orders">1 order</span></td>
+                    <td><span class="badge b-active">Active</span></td>
+                    <td><a href="#" class="view-btn"><i class="fa-solid fa-eye"></i> View</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="footer-row">
+            <span>Showing 1–5 of 89 customers</span>
+            <div class="page-btns">
+                <button class="pg">‹</button>
+                <button class="pg active">1</button>
+                <button class="pg">2</button>
+                <button class="pg">3</button>
+                <button class="pg">›</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</body>
+</html>
